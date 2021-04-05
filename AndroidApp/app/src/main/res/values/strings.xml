@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Repetition Counting</string>
+    <string name="send_data">Gather Data</string>
+    <string name="stop_gathering">Stop</string>
+</resources>
