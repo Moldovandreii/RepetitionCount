@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Repetition Counting</string>
-    <string name="send_data">Gather Data</string>
-    <string name="stop_gathering">Stop</string>
+    <string name="send_data">Start training</string>
+    <string name="stop_gathering">Stop training</string>
+    <string name="choose_exercise">Choose exercise type</string>
+    <string name="exercise1">Bench Press</string>
+    <string name="exercise2">Pull Ups</string>
 </resources>

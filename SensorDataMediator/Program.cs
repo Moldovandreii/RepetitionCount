@@ -22,10 +22,6 @@ namespace SensorDataMediator
             data.acc_z = 1;
             data.timestamp = 100;
 
-            /*var connectionString = "server=localhost; user id=root; password=andreihoria1; database=sensordata";
-            var con = new MySqlConnection(connectionString);
-            con.Open();*/
-
             var factory = new ConnectionFactory
             {
                 Uri = new Uri("amqps://iwzqqjvh:GHp-WHrSsYuFBbkUQwk2Suehf5uqUsTz@hawk.rmq.cloudamqp.com/iwzqqjvh")
@@ -46,7 +42,8 @@ namespace SensorDataMediator
                 var connectionString = "server=localhost; user id=root; password=andreihoria1; database=sensordata";
                 var con = new MySqlConnection(connectionString);
                 con.Open();
-                string query = "insert into sensordata.gathereddata(acc_x,acc_y,acc_z,timestamp,date) values('" + data.acc_x + "','" + data.acc_y + "','" + data.acc_z + "','" + data.timestamp + "','" + date + "');";
+                //string query = "insert into sensordata.gathereddata(acc_x,acc_y,acc_z,timestamp,date) values('" + data.acc_x + "','" + data.acc_y + "','" + data.acc_z + "','" + data.timestamp + "','" + date + "');";
+                string query = "insert into sensordata.traindata(acc_x,acc_y,acc_z,timestamp,date,type) values('" + data.acc_x + "','" + data.acc_y + "','" + data.acc_z + "','" + data.timestamp + "','" + date + "','" + data.type + "');";
                 MySqlCommand command = new MySqlCommand(query, con);
                 MySqlDataReader reader = command.ExecuteReader();
                 con.Close();

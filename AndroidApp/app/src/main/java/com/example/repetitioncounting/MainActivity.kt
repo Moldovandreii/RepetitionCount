@@ -1,36 +1,30 @@
 package com.example.repetitioncounting
 
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.os.AsyncTask
-import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import androidx.annotation.RequiresApi
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.repetitioncounting.models.SensorData
 import com.example.repetitioncounting.rabbitMQ.RabbitServer
 import com.google.gson.Gson
-import com.rabbitmq.client.BuiltinExchangeType
-import com.rabbitmq.client.Channel
-import com.rabbitmq.client.Connection
-import com.rabbitmq.client.ConnectionFactory
-import java.sql.Date
-import java.sql.Timestamp
-import java.time.LocalDateTime
+import com.rabbitmq.client.*
+import java.nio.charset.StandardCharsets.UTF_8
+
 
 class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListener{
 
     lateinit var sensorManager : SensorManager
     private var channel: Channel? = null
     private var connection: Connection? = null
+    private var chosenExercise: String = "none"
 
     override fun onSensorChanged(event: SensorEvent?) {
         var accelerometerData = findViewById<TextView>(R.id.accelerometerDataTextView)
@@ -42,7 +36,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
         val acc_y = event.values[1]
         val acc_z = event.values[2]
         val timestamp = java.util.Calendar.getInstance()
-        val sensorData = SensorData(acc_x, acc_y, acc_z, timestamp.timeInMillis)
+        val type = chosenExercise
+        val sensorData = SensorData(acc_x, acc_y, acc_z, timestamp.timeInMillis, type)
 
         val channel = this.channel
         if(channel != null){
@@ -73,10 +68,13 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager.registerListener(
-            this,
-            sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-            SensorManager.SENSOR_DELAY_NORMAL
+                this,
+                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL
         )
+
+        val intent: Intent = intent
+        chosenExercise = intent.getStringExtra("ex") as String
     }
 
     override fun onClick(v: View?) {
@@ -84,20 +82,32 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
             val rabbitServer =  RabbitServer().defaultExchangeAndQueue()
             this.connection = rabbitServer.getConnection()
             this.channel = rabbitServer.getChannel()
-
-            /*var connection = RabbitServer().getFactory().newConnection()
-            this.channel = connection.createChannel()
-            this.connection = connection*/
+            var status = findViewById<TextView>(R.id.statusTextView)
+            status.text = "Exercising"
+            status.setTextColor(getColor(R.color.myGreen))
         }else{
-            /*var connection = this.connection
-            var channel = this.channel
-            connection?.close()
-            channel?.close()*/
+            var repCount = findViewById<TextView>(R.id.repCountTextView)
+            val channel = this.channel
+            if(channel != null){
+                val deliverCallback = DeliverCallback { consumerTag: String?, delivery: Delivery ->
+                val message = String(delivery.body, UTF_8)
+                    println(" [x] Received '$message'")
+                    repCount.text = message
+                }
+                channel.basicConsume("repCountResult", true, deliverCallback, CancelCallback { consumerTag: String? -> })
+            }else{
+                Log.d("myTag", "Channel is null");
+            }
+
+            this.connection?.close()
             this.connection = null
             this.channel = null
+            var status = findViewById<TextView>(R.id.statusTextView)
+            status.text = "Resting"
+
+            status.setTextColor(getColor(R.color.MyRed))
         }
     }
 
-    
 }
 
