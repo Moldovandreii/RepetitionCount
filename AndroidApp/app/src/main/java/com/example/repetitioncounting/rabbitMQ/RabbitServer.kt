@@ -31,9 +31,8 @@ class RabbitServer {
         val newConnection = getFactory().newConnection()
         val channel = newConnection.createChannel()
 
-        //channel.exchangeDeclare("dataExchange", "direct", true)
         channel.queueDeclare("andreiQueue", true, false, false, emptyMap())
-        //channel.queueBind("andreiQueue", "dataExchange", "myKey")
+        channel.queueDeclare("finishSending", true, false, false, emptyMap())
 
         val obj = RabbitServer()
         obj.channel = channel

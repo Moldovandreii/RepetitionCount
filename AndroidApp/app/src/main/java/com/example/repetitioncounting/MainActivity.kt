@@ -7,7 +7,9 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.os.Handler
 import android.os.StrictMode
+import android.os.SystemClock
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -17,6 +19,7 @@ import com.example.repetitioncounting.rabbitMQ.RabbitServer
 import com.google.gson.Gson
 import com.rabbitmq.client.*
 import java.nio.charset.StandardCharsets.UTF_8
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListener{
@@ -28,13 +31,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
 
     override fun onSensorChanged(event: SensorEvent?) {
         var accelerometerData = findViewById<TextView>(R.id.accelerometerDataTextView)
-        accelerometerData.text = "x = ${event!!.values[0]}\n\n" +
-                                 "y = ${event.values[1]}\n\n"  +
-                                 "z = ${event.values[2]}\n\n"
+//        accelerometerData.text = "x = ${event!!.values[0]}\n\n" +
+//                                 "y = ${event.values[1]}\n\n"  +
+//                                 "z = ${event.values[2]}\n\n"
 
-        val acc_x = event.values[0]
+        val acc_x = event!!.values[0]
         val acc_y = event.values[1]
         val acc_z = event.values[2]
+
         val timestamp = java.util.Calendar.getInstance()
         val type = chosenExercise
         val sensorData = SensorData(acc_x, acc_y, acc_z, timestamp.timeInMillis, type)
@@ -43,10 +47,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
         if(channel != null){
             val jsonStr = Gson().toJson(sensorData)
             channel.basicPublish("", "andreiQueue", null, jsonStr.toByteArray())
-            //channel.basicPublish("", "andreiQueue", null, "This is my string".toByteArray())
-            Log.d("myTag", sensorData.toString());
+//            Log.d("myTag", sensorData.toString());
         }else{
-            Log.d("myTag", "Channel is null");
+//            Log.d("myTag", "Channel is null");
         }
     }
 
@@ -78,6 +81,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
     }
 
     override fun onClick(v: View?) {
+        var repCount = findViewById<TextView>(R.id.repCountTextView)
         if(v!!.id == R.id.gatherDataButton){
             val rabbitServer =  RabbitServer().defaultExchangeAndQueue()
             this.connection = rabbitServer.getConnection()
@@ -85,16 +89,24 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
             var status = findViewById<TextView>(R.id.statusTextView)
             status.text = "Exercising"
             status.setTextColor(getColor(R.color.myGreen))
+            repCount.text = "Press stop button after you finish"
+            repCount.setTextColor(getColor(R.color.MyInfo))
         }else{
-            var repCount = findViewById<TextView>(R.id.repCountTextView)
             val channel = this.channel
             if(channel != null){
+                repCount.setTextColor(getColor(R.color.MyRez))
                 val deliverCallback = DeliverCallback { consumerTag: String?, delivery: Delivery ->
                 val message = String(delivery.body, UTF_8)
                     println(" [x] Received '$message'")
                     repCount.text = message
                 }
+                channel.basicPublish("", "finishSending", null, "Done sending".toByteArray())
+//                repCount.text = "Computing..."
+                Thread.sleep(2000L)
+//                SystemClock.sleep(10000);
+
                 channel.basicConsume("repCountResult", true, deliverCallback, CancelCallback { consumerTag: String? -> })
+                println("Ma execut")
             }else{
                 Log.d("myTag", "Channel is null");
             }

@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="MyRed">#ff0000</color>
     <color name="myGreen">#009900</color>
+    <color name="MyInfo">#28A5B5</color>
+    <color name="MyRez">#1430CC</color>
 </resources>
