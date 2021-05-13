@@ -1,3 +1,4 @@
+
 package com.example.repetitioncounting
 
 import android.content.Context
@@ -10,11 +11,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.StrictMode
 import android.os.SystemClock
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.example.repetitioncounting.models.SensorData
+import com.example.repetitioncounting.models.SensorDataTrain
 import com.example.repetitioncounting.rabbitMQ.RabbitServer
 import com.google.gson.Gson
 import com.rabbitmq.client.*
@@ -28,9 +33,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
     private var channel: Channel? = null
     private var connection: Connection? = null
     private var chosenExercise: String = "none"
+    private var descriptionId = 0
 
     override fun onSensorChanged(event: SensorEvent?) {
-        var accelerometerData = findViewById<TextView>(R.id.accelerometerDataTextView)
+//        var accelerometerData = findViewById<TextView>(R.id.accelerometerDataTextView)
 //        accelerometerData.text = "x = ${event!!.values[0]}\n\n" +
 //                                 "y = ${event.values[1]}\n\n"  +
 //                                 "z = ${event.values[2]}\n\n"
@@ -41,7 +47,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
 
         val timestamp = java.util.Calendar.getInstance()
         val type = chosenExercise
-        val sensorData = SensorData(acc_x, acc_y, acc_z, timestamp.timeInMillis, type)
+        //val sensorData = SensorData(acc_x, acc_y, acc_z, timestamp.timeInMillis, type)
+        val sensorData = SensorDataTrain(acc_x, acc_y, acc_z, timestamp.timeInMillis, type, descriptionId)
 
         val channel = this.channel
         if(channel != null){
@@ -78,6 +85,25 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
 
         val intent: Intent = intent
         chosenExercise = intent.getStringExtra("ex") as String
+
+        val descId = findViewById<EditText>(R.id.descriptionIdEditText)
+        descId.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val text = descId.text.toString()
+                if(text != ""){
+                    descriptionId = descId.text.toString().toInt()
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
     }
 
     override fun onClick(v: View?) {
@@ -100,6 +126,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
                     println(" [x] Received '$message'")
                     repCount.text = message
                 }
+
                 channel.basicPublish("", "finishSending", null, "Done sending".toByteArray())
 //                repCount.text = "Computing..."
                 Thread.sleep(2000L)

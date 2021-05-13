@@ -23,8 +23,8 @@ def plotData(accX, accY, accZ, millis, type):
     plt.title(type)
     plt.ylabel("Accelerometer Data(m/s^2)")
     plt.xlabel("Time(ms)")
-    axes.plot(accX, label='X Axis')
-    axes.plot(accY, label='Y Axis')
-    axes.plot(accZ, label='Z Axis')
+    axes.plot(millis, accX, label='X Axis')
+    axes.plot(millis, accY, label='Y Axis')
+    axes.plot(millis, accZ, label='Z Axis')
     axes.legend()
     return figure

@@ -5,4 +5,10 @@
     <string name="choose_exercise">Choose exercise type</string>
     <string name="exercise1">Bench Press</string>
     <string name="exercise2">Pull Ups</string>
+    <string name="statusLabel">Status:</string>
+    <string name="statusText">Resting</string>
+    <string name="result">Result:</string>
+    <string name="info">Press start button then perform chosen exercise</string>
+    <string name="select">Select</string>
+    <string name="descriptionID">DescId</string>
 </resources>

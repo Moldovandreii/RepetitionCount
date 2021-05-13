@@ -33,7 +33,7 @@
 
     <Button
         android:id="@+id/stopDataButton"
-        android:layout_width="156dp"
+        android:layout_width="150dp"
         android:layout_height="54dp"
         android:backgroundTint="#9C3636"
         android:text="@string/stop_gathering"
@@ -50,9 +50,9 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="16dp"
-        android:text="Status:"
+        android:text="@string/statusLabel"
         android:textColor="#830606"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Resting"
+        android:text="@string/statusText"
         android:textColor="@color/MyRed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.184"
@@ -74,10 +74,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="44dp"
-        android:text="Result: "
-        android:textColor="#2F1263"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/result"
+        android:textColor="#830606"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -85,12 +86,24 @@
         android:id="@+id/repCountTextView"
         android:layout_width="155dp"
         android:layout_height="84dp"
-        android:layout_marginTop="44dp"
-        android:text="Press start button then perform chosen exercise"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/info"
         android:textColor="@color/MyInfo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.238"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <EditText
+        android:id="@+id/descriptionIdEditText"
+        android:layout_width="76dp"
+        android:layout_height="51dp"
+        android:ems="10"
+        android:hint="@string/descriptionID"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repCountTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

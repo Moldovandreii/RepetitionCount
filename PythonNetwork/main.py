@@ -9,18 +9,23 @@ import signalProcessing
 import rabbitMq as rb
 
 myDb = db.connectToDatabase()
-data = db.getTestData(myDb)
-# data = db.getTrainData(myDb)
 
-# accXEx, accYEx, accZEx, millisEx, typeEx = db.getSpecificExData(data, "Bench Press")
-# accXEx, accYEx, accZEx, millisEx, typeEx = db.getSpecificExDataTest(data, "Bench Press")
-# charts.plotData(accXEx, accYEx, accZEx, millisEx, typeEx)
-# plt.show()
+# ----------------------------------------------------------------------------------------------------------------------
 
+data = db.getTrainData(myDb)
+reps = signalProcessing.findPeaksTrain(data, "Bench Press", 2, 1)
 
-reps = signalProcessing.findPeaksBenchPress(data)
-print "Number of reps =", reps
-rb.publishRabbitResult(str(reps))
+# ----------------------------------------------------------------------------------------------------------------------
+
+# while 1:
+#     result = rb.finishSendingData()          # wait for user to stop exercising
+#
+#     data = db.getTestData(myDb)
+#     db.deleteTestData(myDb)
+#
+#     reps = signalProcessing.findPeaks(data)
+#     print "Number of reps =", reps
+#     rb.publishRabbitResult(reps)
 
 
 

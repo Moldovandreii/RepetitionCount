@@ -8,6 +8,7 @@ using System.Text;
 using MySql.Data.MySqlClient;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SensorDataMediator.DTO;
 
 namespace SensorDataMediator
 {
@@ -16,11 +17,11 @@ namespace SensorDataMediator
 
         static void Main(string[] args)
         {
-            var data = new SensorDataDTO();
-            data.acc_x = 1;
-            data.acc_y = 1;
-            data.acc_z = 1;
-            data.timestamp = 100;
+            //var data = new SensorDataDTO();
+            //data.acc_x = 1;
+            //data.acc_y = 1;
+            //data.acc_z = 1;
+            //data.timestamp = 100;
 
             var factory = new ConnectionFactory
             {
@@ -35,15 +36,16 @@ namespace SensorDataMediator
                 var body = e.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 JavaScriptSerializer js = new JavaScriptSerializer();
-                SensorDataDTO data = js.Deserialize<SensorDataDTO>(message);
+                //SensorDataDTO data = js.Deserialize<SensorDataDTO>(message);
+                SensorDataTrainDTO data = js.Deserialize<SensorDataTrainDTO>(message);
                 var date = (new DateTime(1970, 1, 1)).AddMilliseconds(data.timestamp).ToLocalTime().ToString();
                 Console.WriteLine(data.timestamp);
 
                 var connectionString = "server=localhost; user id=root; password=andreihoria1; database=sensordata";
                 var con = new MySqlConnection(connectionString);
                 con.Open();
-                //string query = "insert into sensordata.gathereddata(acc_x,acc_y,acc_z,timestamp,date) values('" + data.acc_x + "','" + data.acc_y + "','" + data.acc_z + "','" + data.timestamp + "','" + date + "');";
-                string query = "insert into sensordata.traindata(acc_x,acc_y,acc_z,timestamp,date,type) values('" + data.acc_x + "','" + data.acc_y + "','" + data.acc_z + "','" + data.timestamp + "','" + date + "','" + data.type + "');";
+                //string query = "insert into sensordata.gathereddata(acc_x,acc_y,acc_z,timestamp,date,type) values('" + data.acc_x + "','" + data.acc_y + "','" + data.acc_z + "','" + data.timestamp + "','" + date + "','" + data.type + "');";
+                string query = "insert into sensordata.traindata(acc_x,acc_y,acc_z,timestamp,date,type,descriptionId) values('" + data.acc_x + "','" + data.acc_y + "','" + data.acc_z + "','" + data.timestamp + "','" + date + "','" + data.type + "','" + data.descriptionId + "');";
                 MySqlCommand command = new MySqlCommand(query, con);
                 MySqlDataReader reader = command.ExecuteReader();
                 con.Close();
