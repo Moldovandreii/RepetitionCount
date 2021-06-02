@@ -51,7 +51,8 @@
         android:id="@+id/chooseEcerciseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="15dp"
         android:backgroundTint="#9C3636"
         android:text="@string/select"
         android:textColor="#25052C"
@@ -62,5 +63,15 @@
         app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exercisesSpinner" />
+
+    <ImageButton
+        android:id="@+id/graphImageButton"
+        android:layout_width="61dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/chooseEcerciseButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exercisesSpinner"
+        app:srcCompat="@drawable/output_onlinepngtools__1_" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

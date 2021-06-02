@@ -47,8 +47,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
 
         val timestamp = java.util.Calendar.getInstance()
         val type = chosenExercise
-        //val sensorData = SensorData(acc_x, acc_y, acc_z, timestamp.timeInMillis, type)
-        val sensorData = SensorDataTrain(acc_x, acc_y, acc_z, timestamp.timeInMillis, type, descriptionId)
+        val weight = descriptionId
+        val sensorData = SensorData(acc_x, acc_y, acc_z, timestamp.timeInMillis, type, weight)
+        //val sensorData = SensorDataTrain(acc_x, acc_y, acc_z, timestamp.timeInMillis, type, descriptionId)
 
         val channel = this.channel
         if(channel != null){
@@ -75,6 +76,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
         sendDataButton.setOnClickListener(this)
         val stopDataButton = findViewById<Button>(R.id.stopDataButton)
         stopDataButton.setOnClickListener(this)
+        val saveInfo = findViewById<ImageButton>(R.id.downloadWorkoutImageButton)
+        saveInfo.setOnClickListener(this)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager.registerListener(
@@ -117,7 +120,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
             status.setTextColor(getColor(R.color.myGreen))
             repCount.text = "Press stop button after you finish"
             repCount.setTextColor(getColor(R.color.MyInfo))
-        }else{
+        }else if (v!!.id == R.id.stopDataButton){
             val channel = this.channel
             if(channel != null){
                 repCount.setTextColor(getColor(R.color.MyRez))
@@ -128,16 +131,13 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
                 }
 
                 channel.basicPublish("", "finishSending", null, "Done sending".toByteArray())
-//                repCount.text = "Computing..."
                 Thread.sleep(2000L)
-//                SystemClock.sleep(10000);
 
                 channel.basicConsume("repCountResult", true, deliverCallback, CancelCallback { consumerTag: String? -> })
                 println("Ma execut")
             }else{
                 Log.d("myTag", "Channel is null");
             }
-
             this.connection?.close()
             this.connection = null
             this.channel = null
@@ -145,6 +145,27 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
             status.text = "Resting"
 
             status.setTextColor(getColor(R.color.MyRed))
+        } else{
+            var workout = ""
+            val rabbitServer =  RabbitServer().defaultExchangeAndQueue()
+            var connection = rabbitServer.getConnection()
+            var channel = rabbitServer.getChannel()
+            if(channel != null){
+                val deliverCallback = DeliverCallback { consumerTag: String?, delivery: Delivery ->
+                    val message = String(delivery.body, UTF_8)
+                    workout = message
+                    println(" [x] Received '$message'")
+                }
+
+                channel.basicPublish("", "finishSending", null, "Workout done".toByteArray())
+                Thread.sleep(2000L)
+
+                channel.basicConsume("repCountResult", true, deliverCallback, CancelCallback { consumerTag: String? -> })
+                println("Ma execut")
+            }else{
+                Log.d("myTag", "Channel is null");
+            }
+            connection?.close()
         }
     }
 

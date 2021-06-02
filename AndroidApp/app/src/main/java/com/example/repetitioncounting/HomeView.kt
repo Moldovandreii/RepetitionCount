@@ -20,6 +20,9 @@ class HomeView : AppCompatActivity(), View.OnClickListener {
         val chooseExButton = findViewById<Button>(R.id.chooseEcerciseButton)
         chooseExButton.setOnClickListener(this)
 
+        val graphButton = findViewById<ImageButton>(R.id.graphImageButton)
+        graphButton.setOnClickListener(this)
+
         exercise = findViewById<Spinner>(R.id.exercisesSpinner)
         result = findViewById<TextView>(R.id.exerciseTextView)
         result.text = "Please choose an exercise then press select"
@@ -40,6 +43,10 @@ class HomeView : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         if(v!!.id == R.id.chooseEcerciseButton){
             val intent = Intent(this@HomeView, MainActivity::class.java)
+            intent.putExtra("ex", chosenExercise)
+            startActivity(intent)
+        }else{
+            val intent = Intent(this@HomeView, GraphsActivity::class.java)
             intent.putExtra("ex", chosenExercise)
             startActivity(intent)
         }

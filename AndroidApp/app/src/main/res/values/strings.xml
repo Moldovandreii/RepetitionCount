@@ -11,4 +11,8 @@
     <string name="info">Press start button then perform chosen exercise</string>
     <string name="select">Select</string>
     <string name="descriptionID">DescId</string>
+    <string name="weight">Used weight</string>
+    <string name="chooseDate">Choose a date</string>
+    <string name="chooseYear">Year:</string>
+    <string name="chooseMonth">Month:</string>
 </resources>

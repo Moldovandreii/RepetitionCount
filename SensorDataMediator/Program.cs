@@ -36,16 +36,16 @@ namespace SensorDataMediator
                 var body = e.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 JavaScriptSerializer js = new JavaScriptSerializer();
-                //SensorDataDTO data = js.Deserialize<SensorDataDTO>(message);
-                SensorDataTrainDTO data = js.Deserialize<SensorDataTrainDTO>(message);
+                SensorDataDTO data = js.Deserialize<SensorDataDTO>(message);
+                //SensorDataTrainDTO data = js.Deserialize<SensorDataTrainDTO>(message);
                 var date = (new DateTime(1970, 1, 1)).AddMilliseconds(data.timestamp).ToLocalTime().ToString();
                 Console.WriteLine(data.timestamp);
 
                 var connectionString = "server=localhost; user id=root; password=andreihoria1; database=sensordata";
                 var con = new MySqlConnection(connectionString);
                 con.Open();
-                //string query = "insert into sensordata.gathereddata(acc_x,acc_y,acc_z,timestamp,date,type) values('" + data.acc_x + "','" + data.acc_y + "','" + data.acc_z + "','" + data.timestamp + "','" + date + "','" + data.type + "');";
-                string query = "insert into sensordata.traindata(acc_x,acc_y,acc_z,timestamp,date,type,descriptionId) values('" + data.acc_x + "','" + data.acc_y + "','" + data.acc_z + "','" + data.timestamp + "','" + date + "','" + data.type + "','" + data.descriptionId + "');";
+                string query = "insert into sensordata.gathereddata(acc_x,acc_y,acc_z,timestamp,date,type, weight) values('" + data.acc_x + "','" + data.acc_y + "','" + data.acc_z + "','" + data.timestamp + "','" + date + "','" + data.type + "','" + data.weight + "');";
+                //string query = "insert into sensordata.traindata(acc_x,acc_y,acc_z,timestamp,date,type,descriptionId) values('" + data.acc_x + "','" + data.acc_y + "','" + data.acc_z + "','" + data.timestamp + "','" + date + "','" + data.type + "','" + data.descriptionId + "');";
                 MySqlCommand command = new MySqlCommand(query, con);
                 MySqlDataReader reader = command.ExecuteReader();
                 con.Close();

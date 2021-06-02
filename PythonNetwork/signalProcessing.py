@@ -21,8 +21,8 @@ def findPeaksBenchPress(accXData, accYData, accZData, millis):
     min_height = y2[minima[0]]
     real_min_height = min_height*-1
     # plot data
-    charts.plotAccData(accXData, accYData, accZData, millis, peak_pos, height, min_pos, real_min_height)
-    plt.show()
+    # charts.plotAccData(accXData, accYData, accZData, millis, peak_pos, height, min_pos, real_min_height)
+    # plt.show()
 
     # find peaks - half rep
     peaksHR = find_peaks(y, height=(-5, 3))
@@ -56,13 +56,13 @@ def findPeaksDeadlift(accXData, accYData, accZData, millis):
 
 
 def findPeaks(data):
-    accXEx, accYEx, accZEx, millisEx, typeEx = db.getTestExData(data)
-    message = ""
+    accXEx, accYEx, accZEx, millisEx, typeEx, weight, date = db.getTestExData(data)
+    reps = ""
     if typeEx == "Bench Press":
-        message = findPeaksBenchPress(accXEx, accYEx, accZEx, millisEx)
+        reps = findPeaksBenchPress(accXEx, accYEx, accZEx, millisEx)
     if typeEx == "Deadlift":
-        message = findPeaksDeadlift(accXEx, accYEx, accZEx, millisEx)
-    return message
+        reps = findPeaksDeadlift(accXEx, accYEx, accZEx, millisEx)
+    return reps, typeEx, weight, date
 
 
 def findPeaksTrain(data, typeEx, descId, pos):

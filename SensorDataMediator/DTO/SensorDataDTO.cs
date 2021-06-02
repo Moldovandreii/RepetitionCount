@@ -11,5 +11,7 @@ namespace SensorDataMediator
         public float acc_z { get; set; }
         public long timestamp { get; set; }
         public string type { get; set; }
+
+        public int weight { get; set; }
     }
 }

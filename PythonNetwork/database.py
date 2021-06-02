@@ -1,5 +1,5 @@
 import mysql.connector
-
+from datetime import datetime, timedelta
 
 def connectToDatabase():
     mydb = mysql.connector.connect(user='root', password='andreihoria1',
@@ -35,18 +35,49 @@ def getTrainData(mydb):
     return sensorData
 
 
+def getFeedbackData(mydb, type):
+    myCursor = mydb.cursor()
+    myCursor.execute("Select * from feedback where type = '" + type + "'")
+    data = myCursor.fetchall()
+    date = []
+    reps = []
+    weight = []
+    for row in data:
+        date.append(row[2])
+        reps.append(row[3])
+        weight.append(row[4])
+    return date, reps, weight
+
+
+def addFeedbackData(mydb, reps, type, weight, date):
+    myCursor = mydb.cursor()
+    myCursor.execute("Select weight from feedback where date = '" + date + "' AND type = '" + type + "'")
+    maxWeight = myCursor.fetchall()[0][0]
+    if weight >= maxWeight:
+        myCursor.execute("Delete from feedback where date = '" + date + "' AND type = '" + type + "'")
+        mydb.commit()
+        sqlString = "Insert into feedback(type, date, reps, weight) Values('" + type + "', '" + date + "', " + str(reps) + ", " + str(weight) + ")"
+        myCursor.execute(sqlString)
+        mydb.commit()
+
+
 def getTestExData(data):
     accX = []
     accY = []
     accZ = []
     millis = []
     type = ""
+    weight = 0
     timestamp = 0
     it = 0
+    date = ""
     for row in data:
         if it == 0:
             type = row[6]
+            weight = row[7]
             timestamp = row[4]
+            dateVar = datetime(1970, 1, 1) + timedelta(seconds=timestamp/1000)
+            date = dateVar.strftime("%d %b %Y")
             millis.append(10)
             it = it + 1
         else:
@@ -56,7 +87,7 @@ def getTestExData(data):
         accX.append(row[1])
         accY.append(row[2])
         accZ.append(row[3])
-    return accX, accY, accZ, millis, type
+    return accX, accY, accZ, millis, type, weight, date
 
 
 def getSpecificExData(data, typeP):

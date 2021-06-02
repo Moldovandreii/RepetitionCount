@@ -12,20 +12,25 @@ myDb = db.connectToDatabase()
 
 # ----------------------------------------------------------------------------------------------------------------------
 
-data = db.getTrainData(myDb)
-reps = signalProcessing.findPeaksTrain(data, "Bench Press", 2, 1)
+# data = db.getTrainData(myDb)
+# reps = signalProcessing.findPeaksTrain(data, "Bench Press", 2, 1)
 
 # ----------------------------------------------------------------------------------------------------------------------
 
-# while 1:
-#     result = rb.finishSendingData()          # wait for user to stop exercising
-#
-#     data = db.getTestData(myDb)
-#     db.deleteTestData(myDb)
-#
-#     reps = signalProcessing.findPeaks(data)
-#     print "Number of reps =", reps
-#     rb.publishRabbitResult(reps)
+while 1:
+    result = rb.finishSendingData()          # wait for user to stop exercising
+    if result == "Done sending":
+        data = db.getTestData(myDb)
+        db.deleteTestData(myDb)
+
+        reps, type, weight, date = signalProcessing.findPeaks(data)
+        db.addFeedbackData(myDb, reps, type, weight, date)
+        print "Number of reps =", reps
+        rb.publishRabbitResult(reps)
+    else:
+        data = db.getFeedbackData(myDb, result)
+        dataString = "\n".join(map(str, data))
+        rb.publishRabbitResult(dataString)
 
 
 

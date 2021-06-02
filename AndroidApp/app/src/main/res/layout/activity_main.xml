@@ -23,7 +23,7 @@
         android:layout_marginTop="24dp"
         android:backgroundTint="#9C3636"
         android:text="@string/send_data"
-        android:textColor="#25052C"
+        android:textColor="@color/GraphColor"
         android:textColorHighlight="#80062F"
         android:textSize="12sp"
         android:textStyle="bold|italic"
@@ -97,13 +97,24 @@
 
     <EditText
         android:id="@+id/descriptionIdEditText"
-        android:layout_width="76dp"
-        android:layout_height="51dp"
+        android:layout_width="110dp"
+        android:layout_height="44dp"
         android:ems="10"
-        android:hint="@string/descriptionID"
+        android:hint="@string/weight"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/repCountTextView" />
+
+    <ImageButton
+        android:id="@+id/downloadWorkoutImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/repCountTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.582"
+        app:layout_constraintStart_toEndOf="@+id/statusTextView"
+        app:srcCompat="@android:drawable/ic_menu_save" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

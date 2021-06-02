@@ -5,5 +5,6 @@ data class SensorData(
     val acc_y: Float,
     val acc_z: Float,
     val timestamp: Long,
-    val type: String
+    val type: String,
+    val weight: Int
     )
