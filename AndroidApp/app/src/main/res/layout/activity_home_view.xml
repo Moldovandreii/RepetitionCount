@@ -11,7 +11,7 @@
         android:id="@+id/textView2"
         android:layout_width="252dp"
         android:layout_height="68dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="17dp"
         android:background="#009688"
         android:paddingStart="18sp"
@@ -30,7 +30,6 @@
         android:id="@+id/exercisesSpinner"
         android:layout_width="245dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.553"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +39,6 @@
         android:id="@+id/exerciseTextView"
         android:layout_width="252dp"
         android:layout_height="57dp"
-        android:layout_marginTop="20dp"
         android:textColor="@color/MyInfo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.575"
@@ -52,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="#9C3636"
         android:text="@string/select"
         android:textColor="#25052C"
@@ -60,7 +58,7 @@
         android:textSize="16sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintHorizontal_bias="0.375"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exercisesSpinner" />
 
@@ -68,10 +66,52 @@
         android:id="@+id/graphImageButton"
         android:layout_width="61dp"
         android:layout_height="58dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toStartOf="@+id/chooseEcerciseButton"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/exercisesSpinner"
+        app:layout_constraintHorizontal_bias="0.843"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercisesSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseTextView"
         app:srcCompat="@drawable/output_onlinepngtools__1_" />
+
+    <Button
+        android:id="@+id/workoutInfoButton"
+        android:layout_width="193dp"
+        android:layout_height="41dp"
+        android:backgroundTint="#9C3636"
+        android:text="@string/workoutInfo"
+        android:textColor="#25052C"
+        android:textColorHighlight="#80062F"
+        android:textSize="16sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addFoodButton" />
+
+    <ImageButton
+        android:id="@+id/exInfoImageButton"
+        android:layout_width="55dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintStart_toEndOf="@+id/exercisesSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseTextView"
+        app:srcCompat="@drawable/output_onlinepngtools__3_" />
+
+    <Button
+        android:id="@+id/addFoodButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#9C3636"
+        android:foregroundTint="#773B3B"
+        android:text="@string/addFood"
+        android:textColor="#25052C"
+        android:textColorHighlight="#80062F"
+        android:textSize="16sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chooseEcerciseButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

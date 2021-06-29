@@ -1,0 +1,3 @@
+Mems - https://www.youtube.com/watch?v=9WAckt2vrrQ
+Accelerometer Sensors - https://dev.fitbit.com/build/guides/sensors/accelerometer/
+RabbitMq - https://www.youtube.com/watch?v=deG25y_r6OY&t=272s

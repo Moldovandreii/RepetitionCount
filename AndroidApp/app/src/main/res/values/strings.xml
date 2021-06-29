@@ -15,4 +15,9 @@
     <string name="chooseDate">Choose a date</string>
     <string name="chooseYear">Year:</string>
     <string name="chooseMonth">Month:</string>
+    <string name="workoutInfo">Workout Info</string>
+    <string name="chooseWorkoutDate">Choose Workout Date</string>
+    <string name="addFood">Add Food</string>
+    <string name="addToDiet">Add To Diet</string>
+    <string name="quantity">Quantity</string>
 </resources>

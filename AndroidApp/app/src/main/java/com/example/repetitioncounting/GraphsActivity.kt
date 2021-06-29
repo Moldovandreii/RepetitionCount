@@ -12,11 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.repetitioncounting.rabbitMQ.RabbitServer
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.charts.CombinedChart
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.rabbitmq.client.CancelCallback
 import com.rabbitmq.client.DeliverCallback
 import com.rabbitmq.client.Delivery
@@ -48,7 +44,7 @@ class GraphsActivity : AppCompatActivity() {
         val graphEx = findViewById<TextView>(R.id.graphExTextView)
         graphEx.text = chosenExercise
 
-        year = findViewById<Spinner>(R.id.yearSpinner)
+        year = findViewById<Spinner>(R.id.goalsSpinner)
         month = findViewById<Spinner>(R.id.monthSpinner)
 
         val years = arrayOf("2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030")
@@ -110,7 +106,7 @@ class GraphsActivity : AppCompatActivity() {
             }
         }
 
-        val months = arrayOf("All", "January", "February", "March", "April", "May", "July", "Jun", "August", "September", "October", "November", "December")
+        val months = arrayOf("All", "January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December")
         month.adapter = ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, months)
         month.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {

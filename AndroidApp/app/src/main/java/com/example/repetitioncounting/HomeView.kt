@@ -19,9 +19,14 @@ class HomeView : AppCompatActivity(), View.OnClickListener {
 
         val chooseExButton = findViewById<Button>(R.id.chooseEcerciseButton)
         chooseExButton.setOnClickListener(this)
-
         val graphButton = findViewById<ImageButton>(R.id.graphImageButton)
         graphButton.setOnClickListener(this)
+        val workoutInfoButton = findViewById<Button>(R.id.workoutInfoButton)
+        workoutInfoButton.setOnClickListener(this)
+        val exerciseInfoButton = findViewById<ImageButton>(R.id.exInfoImageButton)
+        exerciseInfoButton.setOnClickListener(this)
+        val addFoodButton = findViewById<Button>(R.id.addFoodButton)
+        addFoodButton.setOnClickListener(this)
 
         exercise = findViewById<Spinner>(R.id.exercisesSpinner)
         result = findViewById<TextView>(R.id.exerciseTextView)
@@ -45,9 +50,19 @@ class HomeView : AppCompatActivity(), View.OnClickListener {
             val intent = Intent(this@HomeView, MainActivity::class.java)
             intent.putExtra("ex", chosenExercise)
             startActivity(intent)
-        }else{
+        }else if(v!!.id == R.id.graphImageButton){
             val intent = Intent(this@HomeView, GraphsActivity::class.java)
             intent.putExtra("ex", chosenExercise)
+            startActivity(intent)
+        }else if(v!!.id == R.id.workoutInfoButton){
+            val intent = Intent(this@HomeView, WorkoutInfoActivity::class.java)
+            startActivity(intent)
+        }else if(v!!.id == R.id.exInfoImageButton){
+            val intent = Intent(this@HomeView, ExerciseInfoActivity::class.java)
+            intent.putExtra("ex", chosenExercise)
+            startActivity(intent)
+        }else{
+            val intent = Intent(this@HomeView, DietActivity::class.java)
             startActivity(intent)
         }
     }

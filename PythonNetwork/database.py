@@ -6,21 +6,20 @@ def connectToDatabase():
                                    host='127.0.0.1', database='sensordata',
                                    auth_plugin='mysql_native_password')
     if (mydb):
-        print("Connection successfull")
         return mydb
     else:
         print("Connection error")
         return None
 
 
-def getTestData(mydb):
+def getRuntimeData(mydb):
     myCursor = mydb.cursor()
     myCursor.execute("Select * from gathereddata")
     sensorData = myCursor.fetchall()
     return sensorData
 
 
-def deleteTestData(mydb):
+def deleteRuntimeData(mydb):
     myCursor = mydb.cursor()
     myCursor.execute("Delete from gathereddata")
     mydb.commit()
@@ -49,16 +48,67 @@ def getFeedbackData(mydb, type):
     return date, reps, weight
 
 
+def getDietData(mydb, date):
+    date = date[4:]
+    myCursor = mydb.cursor()
+    myCursor.execute("Select * from diet where date = '" + date + "'")
+    data = myCursor.fetchall()
+    foodName = []
+    quantity = []
+    calories = []
+    proteins = []
+    fats = []
+    for row in data:
+        foodName.append(row[1])
+        quantity.append(row[2])
+        calories.append(row[4])
+        proteins.append(row[5])
+        fats.append(row[6])
+    return foodName, quantity, calories, proteins, fats
+
+
+def getWorkoutData(mydb, date):
+    date = date.replace("-", " ")
+    if date.find("June"):
+        date = date.replace("June", "Jun")
+    myCursor = mydb.cursor()
+    myCursor.execute("Select * from workoutinfo where date = '" + date + "'")
+    data = myCursor.fetchall()
+    type = []
+    reps = []
+    weight = []
+    time = []
+    for row in data:
+        type.append(row[1])
+        reps.append(row[3])
+        weight.append(row[4])
+        time.append(row[5])
+    return type, reps, weight, time
+
+
 def addFeedbackData(mydb, reps, type, weight, date):
     myCursor = mydb.cursor()
     myCursor.execute("Select weight from feedback where date = '" + date + "' AND type = '" + type + "'")
-    maxWeight = myCursor.fetchall()[0][0]
+    maxWeightList = myCursor.fetchall()
+    maxWeight = 0
+    if not maxWeightList:
+        maxWeight = 0
+    else:
+        maxWeight = maxWeightList[0][0]
     if weight >= maxWeight:
         myCursor.execute("Delete from feedback where date = '" + date + "' AND type = '" + type + "'")
         mydb.commit()
         sqlString = "Insert into feedback(type, date, reps, weight) Values('" + type + "', '" + date + "', " + str(reps) + ", " + str(weight) + ")"
         myCursor.execute(sqlString)
         mydb.commit()
+
+
+def addWorkoutData(mydb, reps, type, weight, date, time):
+    myCursor = mydb.cursor()
+    seconds = int(time/1000.0)%60
+    sqlString = "Insert into workoutinfo(type, date, reps, weight, time) Values('" + type + "', '" + date + "', " + str(reps) + ", " + str(weight) + "," + str(seconds) + ")"
+    myCursor.execute(sqlString)
+    mydb.commit()
 
 
 def getTestExData(data):
@@ -69,6 +119,8 @@ def getTestExData(data):
     type = ""
     weight = 0
     timestamp = 0
+    lastTs = 0
+    time = 0
     it = 0
     date = ""
     for row in data:
@@ -81,13 +133,15 @@ def getTestExData(data):
             millis.append(10)
             it = it + 1
         else:
+            lastTs = row[4]
             ms = int(row[4] - timestamp)
             millis.append(ms)
             it = it + 1
         accX.append(row[1])
         accY.append(row[2])
         accZ.append(row[3])
-    return accX, accY, accZ, millis, type, weight, date
+        time = lastTs - timestamp
+    return accX, accY, accZ, millis, type, weight, date, time
 
 
 def getSpecificExData(data, typeP):

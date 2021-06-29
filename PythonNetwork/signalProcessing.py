@@ -56,13 +56,13 @@ def findPeaksDeadlift(accXData, accYData, accZData, millis):
 
 
 def findPeaks(data):
-    accXEx, accYEx, accZEx, millisEx, typeEx, weight, date = db.getTestExData(data)
+    accXEx, accYEx, accZEx, millisEx, typeEx, weight, date, time = db.getTestExData(data)
     reps = ""
     if typeEx == "Bench Press":
         reps = findPeaksBenchPress(accXEx, accYEx, accZEx, millisEx)
     if typeEx == "Deadlift":
         reps = findPeaksDeadlift(accXEx, accYEx, accZEx, millisEx)
-    return reps, typeEx, weight, date
+    return reps, typeEx, weight, date, time
 
 
 def findPeaksTrain(data, typeEx, descId, pos):

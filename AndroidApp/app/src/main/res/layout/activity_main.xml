@@ -97,24 +97,13 @@
 
     <EditText
         android:id="@+id/descriptionIdEditText"
-        android:layout_width="110dp"
-        android:layout_height="44dp"
+        android:layout_width="125dp"
+        android:layout_height="42dp"
         android:ems="10"
         android:hint="@string/weight"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/repCountTextView" />
-
-    <ImageButton
-        android:id="@+id/downloadWorkoutImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/repCountTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.582"
-        app:layout_constraintStart_toEndOf="@+id/statusTextView"
-        app:srcCompat="@android:drawable/ic_menu_save" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

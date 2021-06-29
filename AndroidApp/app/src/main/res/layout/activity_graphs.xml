@@ -19,7 +19,6 @@
         android:id="@+id/graphExTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ASDASDASD"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <Spinner
-        android:id="@+id/yearSpinner"
+        android:id="@+id/goalsSpinner"
         android:layout_width="176dp"
         android:layout_height="30dp"
         android:layout_marginTop="5dp"
@@ -69,6 +68,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/yearSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/goalsSpinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

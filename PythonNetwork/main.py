@@ -8,27 +8,44 @@ import charts
 import signalProcessing
 import rabbitMq as rb
 
-myDb = db.connectToDatabase()
-
 # ----------------------------------------------------------------------------------------------------------------------
 
+# myDb = db.connectToDatabase()
 # data = db.getTrainData(myDb)
 # reps = signalProcessing.findPeaksTrain(data, "Bench Press", 2, 1)
+# myDb.close()
 
 # ----------------------------------------------------------------------------------------------------------------------
 
 while 1:
     result = rb.finishSendingData()          # wait for user to stop exercising
     if result == "Done sending":
-        data = db.getTestData(myDb)
-        db.deleteTestData(myDb)
+        myDb = db.connectToDatabase()
+        data = db.getRuntimeData(myDb)
+        db.deleteRuntimeData(myDb)
+        myDb.close()
 
-        reps, type, weight, date = signalProcessing.findPeaks(data)
+        reps, type, weight, date, time = signalProcessing.findPeaks(data)
         db.addFeedbackData(myDb, reps, type, weight, date)
+        db.addWorkoutData(myDb, reps, type, weight, date, time)
         print "Number of reps =", reps
         rb.publishRabbitResult(reps)
+    elif result.find('-') != -1:
+        myDb = db.connectToDatabase()
+        data = db.getWorkoutData(myDb, result)
+        myDb.close()
+        dataString = "\n".join(map(str, data))
+        rb.publishRabbitResult(dataString)
+    elif result.find("Diet") != -1:
+        myDb = db.connectToDatabase()
+        data = db.getDietData(myDb, result)
+        myDb.close()
+        dataString = "\n".join(map(str, data))
+        rb.publishRabbitResult(dataString)
     else:
+        myDb = db.connectToDatabase()
         data = db.getFeedbackData(myDb, result)
+        myDb.close()
         dataString = "\n".join(map(str, data))
         rb.publishRabbitResult(dataString)
 
