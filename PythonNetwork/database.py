@@ -58,19 +58,24 @@ def getDietData(mydb, date):
     calories = []
     proteins = []
     fats = []
+    carbs = []
     for row in data:
         foodName.append(row[1])
         quantity.append(row[2])
         calories.append(row[4])
         proteins.append(row[5])
         fats.append(row[6])
-    return foodName, quantity, calories, proteins, fats
+        carbs.append(row[7])
+    return foodName, quantity, calories, proteins, fats, carbs
 
 
 def getWorkoutData(mydb, date):
     date = date.replace("-", " ")
-    if date.find("June"):
+    x = date.find("July")
+    if date.find("June") == 3:
         date = date.replace("June", "Jun")
+    if date.find("July") == 3:
+        date = date.replace("July", "Jul")
     myCursor = mydb.cursor()
     myCursor.execute("Select * from workoutinfo where date = '" + date + "'")
     data = myCursor.fetchall()

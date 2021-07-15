@@ -26,10 +26,12 @@ class BottomsheetFragment: DialogFragment() {
         var choosenGender = sharedPreferences.getString("gender", "Male")
         var choosenAge = sharedPreferences.getInt("age", 20)
         var choosenActivity = sharedPreferences.getString("activity", "Sedentary")
+        var choosenDiet = sharedPreferences.getString("diet", "None")
         var rootView: View = inflater.inflate(R.layout.bottomsheet_layout, container, false)
         val goalsSpinner = rootView.findViewById<Spinner>(R.id.goalsSpinner)
         val genderSpinner = rootView.findViewById<Spinner>(R.id.genderSpinner)
         val activitySpinner = rootView.findViewById<Spinner>(R.id.activitySpinner)
+        val dietSpinner = rootView.findViewById<Spinner>(R.id.dietSpinner)
         var weight = rootView.findViewById<EditText>(R.id.weightEditText)
         var height = rootView.findViewById<EditText>(R.id.heightEditText)
         var age = rootView.findViewById<EditText>(R.id.ageEditText)
@@ -46,6 +48,7 @@ class BottomsheetFragment: DialogFragment() {
                 putString("gender", choosenGender)
                 putString("goal", choosenGoal)
                 putString("activity", choosenActivity)
+                putString("diet", choosenDiet)
             }.apply()
             Toast.makeText(requireContext(), "Saved", Toast.LENGTH_LONG).show()
         }
@@ -68,6 +71,7 @@ class BottomsheetFragment: DialogFragment() {
                 }
             }
         }
+
         var genders = arrayOf("Male", "Female")
         genderSpinner.adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_expandable_list_item_1, genders)
         genderSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -93,7 +97,18 @@ class BottomsheetFragment: DialogFragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 choosenActivity = activities[position]
             }
+        }
 
+        var diets = arrayOf("None", "Low Carbs", "High Carbs", "Keto", "Paleo")
+        dietSpinner.adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_expandable_list_item_1, diets)
+        dietSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                choosenDiet = diets[position]
+            }
         }
 
         var genderAdapter = genderSpinner.adapter as ArrayAdapter<String>
@@ -105,6 +120,9 @@ class BottomsheetFragment: DialogFragment() {
         var activityAdapter = activitySpinner.adapter as ArrayAdapter<String>
         var activityPos = activityAdapter.getPosition(choosenActivity)
         activitySpinner.setSelection(activityPos)
+        var dietAdapter = dietSpinner.adapter as ArrayAdapter<String>
+        var dietPos = dietAdapter.getPosition(choosenDiet)
+        dietSpinner.setSelection(dietPos)
 
         return rootView
     }

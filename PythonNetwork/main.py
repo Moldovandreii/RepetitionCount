@@ -12,7 +12,8 @@ import rabbitMq as rb
 
 # myDb = db.connectToDatabase()
 # data = db.getTrainData(myDb)
-# reps = signalProcessing.findPeaksTrain(data, "Bench Press", 2, 1)
+# reps = signalProcessing.findPeaksTrain(data, "Seated Rows", 0, 1)
+#
 # myDb.close()
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -23,13 +24,13 @@ while 1:
         myDb = db.connectToDatabase()
         data = db.getRuntimeData(myDb)
         db.deleteRuntimeData(myDb)
-        myDb.close()
 
         reps, type, weight, date, time = signalProcessing.findPeaks(data)
         db.addFeedbackData(myDb, reps, type, weight, date)
         db.addWorkoutData(myDb, reps, type, weight, date, time)
         print "Number of reps =", reps
         rb.publishRabbitResult(reps)
+        myDb.close()
     elif result.find('-') != -1:
         myDb = db.connectToDatabase()
         data = db.getWorkoutData(myDb, result)

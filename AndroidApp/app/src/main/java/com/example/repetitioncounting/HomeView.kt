@@ -32,7 +32,7 @@ class HomeView : AppCompatActivity(), View.OnClickListener {
         result = findViewById<TextView>(R.id.exerciseTextView)
         result.text = "Please choose an exercise then press select"
 
-        val exercises = arrayOf("Bench Press", "Pull Up", "Deadlift", "Biceps Curl", "Ab Crunches", "Skullcrushers", "Squats", "Military Press", "Lateral Raises", "Seated Rows", "Triceps Pushdowns", "Lat Pulldowns", "Overhead Extension", "Dumbbell Pullover")
+        val exercises = arrayOf("Bench Press", "Pull Up", "Deadlift", "Biceps Curl", "Ab Crunches", "Skullcrushers", "Squats", "Military Press", "Lateral Raises", "Seated Rows", "Triceps Pushdowns", "Lat Pulldowns", "Overhead Extension", "Dumbbell Pullover", "Leg Extension")
         exercise.adapter = ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, exercises)
 
         exercise.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{

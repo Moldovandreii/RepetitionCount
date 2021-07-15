@@ -66,10 +66,10 @@
         android:id="@+id/userInfoButton"
         android:layout_width="145dp"
         android:layout_height="39dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#9C3636"
         android:text="User Info"
         android:textColor="#25052C"
-        android:backgroundTint="#9C3636"
         android:textColorHighlight="#80062F"
         android:textSize="12sp"
         android:textStyle="bold|italic"
@@ -77,5 +77,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/carbsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:text="Carbs"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fatsTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

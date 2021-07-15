@@ -43,15 +43,16 @@
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="44dp"
         android:backgroundTint="#26C6DA"
         android:text="Save Data"
         android:textColor="#ffff"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.96"
         app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/goalsSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/dietSpinner" />
 
     <TextView
         android:id="@+id/textView11"
@@ -81,15 +82,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:text="Current Goal:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ageEditText" />
 
     <Spinner
         android:id="@+id/activitySpinner"
-        android:layout_width="253dp"
-        android:layout_height="38dp"
+        android:layout_width="255dp"
+        android:layout_height="45dp"
         android:layout_marginStart="36dp"
         app:layout_constraintStart_toEndOf="@+id/ageEditText"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
@@ -99,7 +100,7 @@
         android:layout_width="191dp"
         android:layout_height="41dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintStart_toEndOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/activitySpinner" />
 
@@ -126,13 +127,15 @@
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginBottom="44dp"
         android:backgroundTint="#EC407A"
         android:text="Back"
         android:textColor="#ffff"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goalsSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        app:layout_constraintVertical_bias="0.716" />
 
     <TextView
         android:id="@+id/textView15"
@@ -164,4 +167,23 @@
         android:text="Activity Level"
         app:layout_constraintStart_toEndOf="@+id/textView15"
         app:layout_constraintTop_toBottomOf="@+id/heightEditText" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="36dp"
+        android:text="Diet Type:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <Spinner
+        android:id="@+id/dietSpinner"
+        android:layout_width="190dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toEndOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/goalsSpinner" />
 </androidx.constraintlayout.widget.ConstraintLayout>

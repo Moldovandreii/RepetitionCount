@@ -1,0 +1,25 @@
+1.Hello, my name is Moldovan Horia Andrei and under the supervision of dr Antal and consultancy of Prof Salomie I have work towards implementing a fitness tracking application for my license project.
+
+2.Throughout this prezentation I will go through the following contents, starting of course with context and motivation.
+
+3.Wich were the issues that led me into choosing this license project. Well, accordind to WHO, the obesity rate is continously increasing, standing now at almost 40% around the world, the main cause being high caloric diets and people being less physically active. Among many other issues, lack of physical exercise can lead to severe health problems, one of the most common being lower back pain,and according to the National Institute of Neurological Disorders and Stroke at least 8 out of 10 of americans encountering this problem throughout their lifetime. Why is physical exercise avoided? In this technological era, where everything is one click away, the practical need of physical exercise is also being drastically reduced. But I think that we should not let this be the cause but rather use it into our advantage and make use of all this features we have around us in order to slowly incorporate this fitness lifestyle into our daily routine, which is what i've been trying to achieve with the help of this app.
+
+4.This leads me to the main objective, which would be to study, design and implement a fitness tracking application, capable of helping the users increase their overall performance by providing functionalities which can present the road to becoming a better self as something which anyone can achieve.
+In order to create this app I had to firstly study the already existing approaches in order to see what has been done and what could be done, to create features which can track not only the physical activity but also the diet status, to come with a solution for counting the repetitions, to provide accurate graphics and suggestive feedbacks in order to help the user monitor his improvements and lastly, to create an interactive and simple to use user interface.
+
+5.Following with related work, some existing fitness tracking applications along with their features have been analysed. Only one of the found application had the functionality of repetition counting, but it required the user to use a video camera and to record himself. Following, most of this type of applications on the market are targeted towards creating personalised workouts for the user.
+
+6.An overall solution for decreasing high obesity rate and leading people towards physical exercise is to implement a smartwatch app which through its functionalities is capable of assisting the user not only during his workouts but also throughout the entire day. This functionalities should be able to track not only phy activity but also the daily diet.
+A list of different technologies were used for implementing this application. At their center stands the rabbitMq server which is a message broker allowing the applications to communicate between them by publishing and comsuming messagess from a queue. For storing relevant information, MySql database has been used. 
+
+7.The functionalities regarding the physical activities are the following: prowiding additional information about the execution of each exercise, being able to count the number of repetitons of a certain exectuion, displaying the personal records of different exercise and providing detailed information about a specified workout along with the possibility of saving it to the exeternal space of the device.
+
+8.Regarding the repetition counting problem, we have used a 3-axis accelerometer in order to capture the signal. The used approch is based on a supervised data gathering method, mening that the user has to specify the start and end point of the execution in order to filter the background noise representing the time beteen executions from the relevant signals. After succesfully capturing the signal, the problem of repetition counting reduces to counting the peaks of the signal. An important mention would be that different exercises should be treated in different ways in order to obtain the desired output.
+
+9.The functionalities releted to monitoring the diet are the following: adding dishes to the diet, specify the personal characteristics along with the desired goal and optionally a diet type and providing real time feedback related to the current diet.
+
+10.In order to calculate the total amount of calories needed, the basal or resting metabolic rate along with the total daily energy expenditure had to be calculated, having as variables the user specified characteristics. Following, for calculating the amount of calories burned throughout a workout, the metabolic equivalent of task has been used in order to compute the calories burned for each performed exercise.
+
+14.Concluding this presentation, we have succefully implemented a distributed system for tracking the physical exercise along with the daily diet and designed a method for counting the number of repetitions for different gym exercises. 
+
+

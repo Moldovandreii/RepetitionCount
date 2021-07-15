@@ -106,7 +106,7 @@ class GraphsActivity : AppCompatActivity() {
             }
         }
 
-        val months = arrayOf("All", "January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December")
+        val months = arrayOf("All", "January", "February", "March", "April", "May", "Jun", "Jul", "August", "September", "October", "November", "December")
         month.adapter = ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, months)
         month.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -199,28 +199,5 @@ class GraphsActivity : AppCompatActivity() {
         reps = repsStr.map { it.toFloat() }.toTypedArray()
         val weightStr: List<String> = listOf(*weightString.split(",").toTypedArray())
         weight = weightStr.map { it.toFloat() }.toTypedArray()
-
-
-//        val combinedChart = findViewById<CombinedChart>(R.id.bargraph)
-//
-//        val yValues = ArrayList<BarEntry>()
-//        for(i in 0..weight.size-1){
-//            yValues.add(BarEntry(weight[i],i))
-//        }
-//        val barDataSet = BarDataSet(yValues, "Weight")
-//        val barData = BarData(dates, barDataSet)
-//
-//        val yValuesLine = ArrayList<Entry>()
-//        for (i in 0..reps.size-1){
-//            yValuesLine.add(BarEntry(reps[i], i))
-//        }
-//        val lineDataSet = LineDataSet(yValuesLine, "Reps")
-//        val lineData = LineData(dates, lineDataSet)
-//
-//
-//        val combinedData = CombinedData()
-//        combinedData.setData(barData)
-//        combinedData.setData(lineData)
-//        combinedChart.data = combinedData
     }
 }

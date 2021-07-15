@@ -119,13 +119,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
             repCount.text = "Press stop button after you finish"
             repCount.setTextColor(getColor(R.color.MyInfo))
         }else if(v!!.id == R.id.stopDataButton){
+            var repCountRez = ""
             val channel = this.channel
             if(channel != null){
                 repCount.setTextColor(getColor(R.color.MyRez))
                 val deliverCallback = DeliverCallback { consumerTag: String?, delivery: Delivery ->
                 val message = String(delivery.body, UTF_8)
                     println(" [x] Received '$message'")
-                    repCount.text = message
+                    //repCount.text = message
+                    repCountRez = message
                 }
 
                 channel.basicPublish("", "finishSending", null, "Done sending".toByteArray())
@@ -136,6 +138,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener, View.OnClickListe
             }else{
                 Log.d("myTag", "Channel is null");
             }
+            while (repCountRez == ""){}
+            repCount.text = repCountRez
             this.connection?.close()
             this.connection = null
             this.channel = null

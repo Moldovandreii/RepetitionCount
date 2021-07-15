@@ -141,15 +141,19 @@ class  WorkoutInfoActivity : AppCompatActivity() {
     }
 
     fun findBurnedCalories(exName: String, time: Int) : Double{
-        var MET = 0
+        var MET = 6.0
         var caloriesBurned = 0.0
         if(exName == "BenchPress" || exName == "Deadlift"){
-            MET = 6
-            val sharedPreference = getSharedPreferences("shared", Context.MODE_PRIVATE)
-            val weight = sharedPreference.getInt("weight", 0)
-            val caloriesBurnedPerMin = MET * 3.5 * weight / 200
-            caloriesBurned = time * caloriesBurnedPerMin / 60
+            MET = 6.3
+        }else if(exName == "BicepsCurl" || exName == "SeatedRows"){
+            MET = 6.0
+        }else if(exName == "Triceps Pushdowns"){
+            MET = 5.9
         }
+        val sharedPreference = getSharedPreferences("shared", Context.MODE_PRIVATE)
+        val weight = sharedPreference.getInt("weight", 0)
+        val caloriesBurnedPerMin = MET * 3.5 * weight / 200
+        caloriesBurned = time * caloriesBurnedPerMin / 60
         return caloriesBurned
     }
 }

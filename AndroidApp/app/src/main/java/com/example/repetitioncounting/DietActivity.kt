@@ -27,6 +27,7 @@ class DietActivity : AppCompatActivity(), View.OnClickListener {
     private var totalCalories = 0.0
     private var totalProteins = 0.0
     private var totalFats = 0.0
+    private var totalCarbs = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
@@ -44,6 +45,7 @@ class DietActivity : AppCompatActivity(), View.OnClickListener {
         searchSpinner()
 
         getFood()
+
     }
 
     private fun searchSpinner()  {
@@ -59,7 +61,6 @@ class DietActivity : AppCompatActivity(), View.OnClickListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 foodName = foods[position]
             }
-
         }
     }
 
@@ -68,7 +69,14 @@ class DietActivity : AppCompatActivity(), View.OnClickListener {
         "Bread",
         "Fish",
         "Rice",
-        "Avocado"
+        "Avocado",
+        "Chicken Breast",
+        "Pasta",
+        "Potatoes",
+        "Pork",
+        "Cereals",
+        "Yogurt",
+        "Egg"
     )
 
     private fun getFood(){
@@ -104,6 +112,7 @@ class DietActivity : AppCompatActivity(), View.OnClickListener {
             val caloriesString = dietList[2].substring(1, dietList[2].length-1).replace("\\s".toRegex(), "")
             val proteinsString = dietList[3].substring(1, dietList[3].length-1).replace("\\s".toRegex(), "")
             val fatsString = dietList[4].substring(1, dietList[4].length-1).replace("\\s".toRegex(), "")
+            val carbsString = dietList[5].substring(1, dietList[5].length-1).replace("\\s".toRegex(), "")
             val names = listOf(*namesString.split(",").toTypedArray())
             val quantityStr: List<String> = listOf(*quantityString.split(",").toTypedArray())
             val quantity = quantityStr.map { it.toFloat() }.toTypedArray()
@@ -113,6 +122,8 @@ class DietActivity : AppCompatActivity(), View.OnClickListener {
             val proteins = proteinsStr.map { it.toFloat() }.toTypedArray()
             val fatsStr: List<String> = listOf(*fatsString.split(",").toTypedArray())
             val fats = fatsStr.map { it.toFloat() }.toTypedArray()
+            val carbsStr: List<String> = listOf(*carbsString.split(",").toTypedArray())
+            val carbs = carbsStr.map { it.toFloat() }.toTypedArray()
             var newNames: ArrayList<String> = ArrayList<String>()
             for(name in names){
                 var newName = name.removeRange(0,2)
@@ -123,7 +134,8 @@ class DietActivity : AppCompatActivity(), View.OnClickListener {
                 totalCalories += calories[i]
                 totalProteins += proteins[i]
                 totalFats += fats[i]
-                dietText = dietText + "Food" + (i+1) + " - Name: " + newNames[i] + ", Quantity: " + quantity[i] + ", Calories: " + calories[i] + ", Proteins: " + proteins[i] + ", Fats: " + fats[i] + "\n"
+                totalCarbs += carbs[i]
+                dietText = dietText + "Food" + (i+1) + " - Name: " + newNames[i] + ", Quantity: " + quantity[i] + ", Calories: " + calories[i] + ", Proteins: " + proteins[i] + ", Fats: " + fats[i] + ", Carbs: " + carbs[i] + "\n"
             }
         }else{
             dietText = "No food added today."
@@ -151,6 +163,7 @@ class DietActivity : AppCompatActivity(), View.OnClickListener {
             intent.putExtra("totalCalories", totalCalories)
             intent.putExtra("totalProteins", totalProteins)
             intent.putExtra("totalFats", totalFats)
+            intent.putExtra("totalCarbs", totalCarbs)
             startActivity(intent)
         }
     }
